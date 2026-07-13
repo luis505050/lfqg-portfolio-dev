@@ -11,7 +11,7 @@ export const perfil = {
   subtitulo:
     'Desarrollador full-stack especializado en React, Node.js y PostgreSQL. Diseño e implemento sistemas completos: desde el modelo de base de datos hasta la interfaz que usa el usuario final.',
   ubicacion: 'Lima, Perú',
-  disponibilidad: 'Disponible para prácticas y oportunidades junior',
+  disponibilidad: 'Disponible para prácticas remuneradas y oportunidades laborales para junior',
   email: 'tu.correo@ejemplo.com',
   github: 'https://github.com/tu-usuario',
   linkedin: 'https://linkedin.com/in/tu-usuario',
@@ -20,7 +20,7 @@ export const perfil = {
 
 export const sobreMi = {
   parrafos: [
-    'Soy desarrollador full-stack enfocado en construir sistemas de gestión reales, no solo demos. Me interesa el ciclo completo: modelar la base de datos, exponer una API limpia y segura, y traducir eso en una interfaz que la gente pueda usar sin fricción.',
+    'Soy desarrollador full-stack freelance, enfocado en construir sistemas de gestión reales, no solo demos. Me interesa el ciclo completo: modelar la base de datos, exponer una API limpia y segura, y traducir eso en una interfaz que la gente pueda usar sin fricción.',
     'Trabajo principalmente con React y Vite en el frontend, y Node.js con Express en el backend, apoyado en PostgreSQL para persistencia de datos. Me tomo en serio la autenticación y el control de acceso: JWT, roles y permisos no son un extra, son parte del diseño desde el inicio.',
     'Actualmente busco prácticas u oportunidades junior donde pueda seguir resolviendo problemas de negocio reales con código, y donde equivocarme rápido y aprender más rápido todavía sea parte del trabajo.',
   ],
