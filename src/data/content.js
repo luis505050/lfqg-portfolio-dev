@@ -4,13 +4,13 @@
 // ─────────────────────────────────────────────────────────
 
 export const perfil = {
-  nombre: 'Tu Nombre',
+  nombre: 'Luis Fernando, Quispe Garcia',
   rol: 'Desarrollador Full-Stack',
   eyebrow: '> desarrollador_full-stack',
   titulo: 'Construyo sistemas web que la gente realmente usa.',
   subtitulo:
     'Desarrollador full-stack especializado en React, Node.js y PostgreSQL. Diseño e implemento sistemas completos: desde el modelo de base de datos hasta la interfaz que usa el usuario final.',
-  ubicacion: 'Lima, Perú',
+  ubicacion: 'JUNIN, Huancayo Perú',
   disponibilidad: 'Disponible para prácticas remuneradas y oportunidades laborales para junior',
   email: 'tu.correo@ejemplo.com',
   github: 'https://github.com/tu-usuario',
