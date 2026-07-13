@@ -1,0 +1,647 @@
+/* ─────────────────────────────────────────────────────────
+   TOKENS
+   Paleta inspirada en bloques de Minecraft, pero desaturada
+   y minimalista: fondo tipo "void", paneles tipo piedra,
+   acento verde césped, acento cálido antorcha.
+
+   Tipografía y espaciado usan clamp() para escalar de forma
+   fluida entre mobile y desktop, sin saltos bruscos por
+   breakpoint.
+───────────────────────────────────────────────────────── */
+:root {
+  --void-900: #14141a;
+  --stone-800: #201e26;
+  --stone-700: #2a2831;
+  --stone-600: #3a3640;
+  --stone-500: #524d5a;
+  --quartz-50: #f5f3ee;
+  --quartz-200: #cfcbd8;
+  --grass-500: #6cbb3c;
+  --grass-400: #86d456;
+  --torch-400: #f2c14e;
+
+  --font-display: 'Press Start 2P', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+
+  --pixel: 4px;
+  --maxw: 1120px;
+
+  /* Espaciado fluido: crece con el viewport entre 360px y 1280px */
+  --space-section: clamp(48px, 6vw + 16px, 96px);
+  --space-lg: clamp(28px, 4vw, 56px);
+  --space-md: clamp(18px, 2.5vw, 32px);
+
+  /* Tipografía fluida */
+  --fs-h1: clamp(19px, 3vw + 8px, 28px);
+  --fs-h2: clamp(16px, 1.6vw + 8px, 20px);
+  --fs-body-lg: clamp(13.5px, 1vw + 8px, 15px);
+  --fs-body: clamp(13px, 0.5vw + 10px, 14.5px);
+  --fs-small: clamp(10.5px, 0.4vw + 9px, 12px);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* Evita overflow horizontal por elementos anchos (terminal, grids) */
+html, body { overflow-x: hidden; width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--void-900);
+  background-image:
+    linear-gradient(var(--stone-700) 1px, transparent 1px),
+    linear-gradient(90deg, var(--stone-700) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  color: var(--quartz-50);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* Respeta notch / bordes redondeados en móviles */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+::selection {
+  background: var(--grass-500);
+  color: var(--void-900);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--torch-400);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  line-height: 1.5;
+}
+
+p { margin: 0; }
+
+/* Todo elemento interactivo cumple el tamaño mínimo táctil (44px) */
+button, a.btn-mc, .hotbar-slot, .nav-toggle {
+  min-height: 44px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 24px);
+}
+
+.section {
+  padding: var(--space-section) 0;
+  border-bottom: 1px dashed var(--stone-600);
+}
+
+.section:last-of-type { border-bottom: none; }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  color: var(--grass-400);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.section-title {
+  font-size: var(--fs-h2);
+  color: var(--quartz-50);
+  margin-bottom: 12px;
+}
+
+.section-lead {
+  color: var(--quartz-200);
+  max-width: 60ch;
+  font-size: var(--fs-body-lg);
+  margin-bottom: var(--space-lg);
+}
+
+/* ─────────────────────────────────────────────────────────
+   MARCO PIXEL
+───────────────────────────────────────────────────────── */
+.pixel-panel {
+  position: relative;
+  background: var(--stone-800);
+  box-shadow:
+    inset 0 4px 0 0 rgba(255, 255, 255, 0.06),
+    inset 0 -4px 0 0 rgba(0, 0, 0, 0.35),
+    inset 4px 0 0 0 rgba(255, 255, 255, 0.04),
+    inset -4px 0 0 0 rgba(0, 0, 0, 0.25);
+  border: 4px solid var(--stone-600);
+}
+
+.btn-mc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--quartz-50);
+  background: var(--stone-600);
+  border: none;
+  padding: 14px 18px;
+  cursor: pointer;
+  box-shadow:
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.35),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.08s ease, background 0.15s ease;
+}
+
+.btn-mc:hover {
+  background: var(--stone-500);
+  transform: translateY(-2px);
+}
+
+.btn-mc:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 4px 4px 0 0 rgba(0, 0, 0, 0.35),
+    inset -4px -4px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.btn-mc--primary {
+  background: var(--grass-500);
+  color: var(--void-900);
+}
+
+.btn-mc--primary:hover {
+  background: var(--grass-400);
+}
+
+/* ─────────────────────────────────────────────────────────
+   NAVBAR / HOTBAR
+───────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(20, 20, 26, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px dashed var(--stone-600);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px clamp(16px, 4vw, 24px);
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: clamp(11px, 1.2vw + 6px, 13px);
+  color: var(--grass-400);
+}
+
+.hotbar {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  background: var(--stone-800);
+  border: 3px solid var(--stone-600);
+}
+
+.hotbar-slot {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 10px 12px;
+  color: var(--quartz-200);
+  background: var(--stone-700);
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.hotbar-slot:hover {
+  color: var(--quartz-50);
+  border-color: var(--stone-500);
+}
+
+.hotbar-slot--active {
+  color: var(--void-900);
+  background: var(--grass-500);
+  border-color: var(--quartz-50);
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 15px;
+  background: var(--stone-700);
+  border: 2px solid var(--stone-600);
+  color: var(--quartz-50);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* ─────────────────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────────────────── */
+.hero { padding-top: clamp(24px, 4vw, 40px); }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: var(--fs-h1);
+  color: var(--quartz-50);
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  color: var(--quartz-200);
+  font-size: var(--fs-body-lg);
+  max-width: 52ch;
+  margin-bottom: var(--space-md);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: var(--space-md);
+}
+
+/* En mobile, los CTA ocupan el ancho completo: más fáciles de tocar */
+.hero-actions .btn-mc { flex: 1 1 auto; }
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  font-size: var(--fs-small);
+  color: var(--quartz-200);
+}
+
+.hero-meta li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--grass-500);
+  flex-shrink: 0;
+}
+
+.terminal {
+  background: var(--stone-800);
+  border: 4px solid var(--stone-600);
+  box-shadow: 8px 8px 0 0 var(--stone-700);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.terminal-bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--stone-600);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--stone-500);
+  flex-shrink: 0;
+}
+
+.terminal-body {
+  padding: clamp(14px, 3vw, 20px);
+  font-size: clamp(11.5px, 1vw + 8px, 13px);
+  min-height: 190px;
+  overflow-x: auto;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--quartz-200);
+}
+
+.terminal-key { color: var(--torch-400); }
+.terminal-string { color: var(--grass-400); }
+.terminal-punct { color: var(--quartz-50); }
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--grass-400);
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ─────────────────────────────────────────────────────────
+   SOBRE MI
+───────────────────────────────────────────────────────── */
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.sobre-parrafos p {
+  color: var(--quartz-200);
+  font-size: var(--fs-body);
+  margin-bottom: 18px;
+}
+
+.skills-group { margin-bottom: 22px; }
+
+.skills-group h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--grass-400);
+  margin-bottom: 10px;
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skills-tags li {
+  font-size: var(--fs-small);
+  padding: 6px 10px;
+  background: var(--stone-700);
+  border: 2px solid var(--stone-600);
+  color: var(--quartz-50);
+}
+
+/* ─────────────────────────────────────────────────────────
+   PROYECTOS
+───────────────────────────────────────────────────────── */
+.proyecto-card {
+  padding: clamp(20px, 4vw, 32px);
+  margin-bottom: 28px;
+}
+
+.proyecto-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.proyecto-nombre {
+  font-size: clamp(14px, 1.4vw + 8px, 16px);
+  color: var(--quartz-50);
+}
+
+.proyecto-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.proyecto-resumen {
+  color: var(--quartz-200);
+  font-size: var(--fs-body);
+  margin-bottom: var(--space-md);
+}
+
+.proyecto-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.proyecto-cols h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--torch-400);
+  margin: 0 0 10px;
+}
+
+.proyecto-cols ul {
+  margin: 0 0 20px;
+  padding-left: 18px;
+  color: var(--quartz-200);
+  font-size: 13.5px;
+}
+
+.proyecto-cols li { margin-bottom: 6px; }
+
+.proyecto-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.stack-chip {
+  font-size: 11px;
+  padding: 5px 9px;
+  background: var(--void-900);
+  border: 1px solid var(--stone-600);
+  color: var(--grass-400);
+}
+
+/* ─────────────────────────────────────────────────────────
+   TECNOLOGIAS
+   Grid fluido: se auto-ajusta al ancho disponible sin
+   necesidad de definir columnas fijas por breakpoint.
+───────────────────────────────────────────────────────── */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+}
+
+.tech-slot {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  background: var(--stone-800);
+  border: 3px solid var(--stone-600);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--quartz-50);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.tech-slot:hover {
+  border-color: var(--grass-500);
+  transform: translateY(-3px);
+}
+
+/* ─────────────────────────────────────────────────────────
+   CONTACTO
+───────────────────────────────────────────────────────── */
+.contacto-panel {
+  padding: clamp(24px, 5vw, 40px);
+  text-align: center;
+}
+
+.contacto-panel h2 {
+  font-size: clamp(16px, 1.6vw + 8px, 18px);
+  margin-bottom: 14px;
+}
+
+.contacto-panel p {
+  color: var(--quartz-200);
+  font-size: var(--fs-body);
+  max-width: 50ch;
+  margin: 0 auto 32px;
+}
+
+.contacto-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.contacto-actions .btn-mc { flex: 1 1 160px; }
+
+/* ─────────────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────────────── */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 11px;
+  color: var(--stone-500);
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE — mobile-first, breakpoints en cascada
+   1280 → escritorio grande / 1024 → tablet horizontal
+   768  → tablet vertical     / 480 → móvil
+   360  → móvil pequeño
+───────────────────────────────────────────────────────── */
+
+/* Escritorio grande: un poco más de aire */
+@media (min-width: 1280px) {
+  :root { --maxw: 1180px; }
+}
+
+/* Tablet horizontal: el hero se mantiene en 2 columnas pero más ajustado */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr 0.85fr; gap: 40px; }
+  .tech-grid { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); }
+}
+
+/* Tablet vertical / móvil grande: se apilan las columnas y aparece el menú hamburguesa */
+@media (max-width: 860px) {
+  .hero-grid,
+  .sobre-grid,
+  .proyecto-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .hotbar {
+    position: fixed;
+    top: 60px;
+    left: 12px;
+    right: 12px;
+    flex-direction: column;
+    display: none;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 60;
+  }
+
+  .hotbar--open { display: flex; }
+
+  .hotbar-slot {
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+  }
+
+  .nav-toggle { display: inline-flex; }
+}
+
+/* Móvil: reduce paddings, fuerza 1 sola columna en algunos bloques,
+   evita que el terminal y las cards se corten en pantallas angostas */
+@media (max-width: 600px) {
+  .container { padding: 0 16px; }
+
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn-mc { width: 100%; }
+
+  .proyecto-head { flex-direction: column; align-items: stretch; }
+  .proyecto-links .btn-mc { flex: 1 1 auto; }
+
+  .contacto-actions { flex-direction: column; }
+  .contacto-actions .btn-mc { width: 100%; }
+
+  .tech-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Móvil pequeño (iPhone SE y similares) */
+@media (max-width: 380px) {
+  .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  .logo { font-size: 10px; }
+  .terminal-body { min-height: 160px; }
+}
+
+/* Landscape en móviles bajos: evita que el hero ocupe toda la pantalla */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero { padding-top: 16px; }
+  .section { padding: 40px 0; }
+}
+
+/* Pantallas de alta densidad: bordes pixel siguen nítidos */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .pixel-panel, .terminal, .tech-slot, .hotbar, .skills-tags li, .stack-chip {
+    image-rendering: pixelated;
+  }
+}
