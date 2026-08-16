@@ -137,6 +137,13 @@ button, a.btn-mc, .hotbar-slot, .nav-toggle {
 }
 
 /* ─────────────────────────────────────────────────────────
+   CUERPO DEL MAIN
+───────────────────────────────────────────────────────── */
+
+
+
+
+/* ─────────────────────────────────────────────────────────
    MARCO PIXEL
 ───────────────────────────────────────────────────────── */
 .pixel-panel {
@@ -542,7 +549,7 @@ button, a.btn-mc, .hotbar-slot, .nav-toggle {
 }
 
 .contacto-actions {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;

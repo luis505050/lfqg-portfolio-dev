@@ -31,6 +31,7 @@ export default function App() {
 
   return (
     <>
+    <div className="body-main">  
       <Navbar activeSection={activeSection} />
       <main>
         <Hero />
@@ -40,6 +41,7 @@ export default function App() {
         <Contacto />
       </main>
       <Footer />
+    </div> 
     </>
   )
 }

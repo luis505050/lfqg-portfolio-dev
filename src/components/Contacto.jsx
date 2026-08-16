@@ -15,12 +15,12 @@ export default function Contacto() {
             <a className="btn-mc btn-mc--primary" href={`mailto:${perfil.email}`}>
               Enviar correo
             </a>
-            <a className="btn-mc" href={perfil.github} target="_blank" rel="noreferrer">
+            {/* <a className="btn-mc" href={perfil.github} target="_blank" rel="noreferrer">
               GitHub
             </a>
             <a className="btn-mc" href={perfil.linkedin} target="_blank" rel="noreferrer">
               LinkedIn
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

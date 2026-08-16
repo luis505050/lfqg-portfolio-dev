@@ -12,10 +12,10 @@ export const perfil = {
     'Desarrollador full-stack especializado en React, Node.js y PostgreSQL. Diseño e implemento sistemas completos: desde el modelo de base de datos hasta la interfaz que usa el usuario final.',
   ubicacion: 'JUNIN, Huancayo Perú',
   disponibilidad: 'Disponible para prácticas remuneradas y oportunidades laborales para junior',
-  email: 'tu.correo@ejemplo.com',
-  github: 'https://github.com/tu-usuario',
-  linkedin: 'https://linkedin.com/in/tu-usuario',
-  cv: '/cv.pdf',
+  email: 'tu.correo@ejemplo.com',                 //Actualizar datos del correo
+  github: 'https://github.com/tu-usuario',        //Actializar datos de repositorio a mostrar
+  linkedin: 'https://linkedin.com/in/tu-usuario', //Actualizar datos o eliminar el link 
+  cv: '/cv.pdf',                                  //Cargar el cv actualizado (ACTUAL) 
 }
 
 export const sobreMi = {
@@ -51,7 +51,7 @@ export const proyectos = [
     rol: 'Desarrollo full-stack: diseño de base de datos, API y frontend',
     enlaces: {
       github: 'https://github.com/tu-usuario/sistema-integral-gestion',
-      demo: '',
+      demo: 'https://sig-imn.netlify.app/selector',
     },
   },
 ]
